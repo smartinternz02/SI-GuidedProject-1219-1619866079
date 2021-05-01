@@ -1,0 +1,50 @@
+Smart garage gate 
+
+Here we are using an ultra sonic sensor in front of the garage gate .to identify the object distance.
+One the object is in the mentioned distance the servo motor initiated and the gate opens 
+If the object is less than 3 meter the servo motor rotates and the gate opens 
+Again the loop will check the condition if the object is not find then it closes gate.
+
+
+Program to implement smart gate 
+Equipment needed
+ESP32 chip
+Ultra sonic sensor
+Servo motor
+
+
+ Program:
+#include<Servo.h>
+Servo myServo;
+int echopin=4;
+int trigpin=5;
+void setup() {
+ 
+pinMode(echopin,INPUT);
+pinMode(trigpin,OUTPUT);
+Serial.begin(9600);
+myServo.attach(13);
+}
+
+void loop() {
+  
+digitalWrite(trigpin,HIGH);
+digitalWrite(trigpin,LOW);
+int duration=pulseIn(echopin,HIGH);
+int distance=duration*0.0343/2;
+Serial.print("the distance is");
+Serial.println(distance);
+if(distance<=300){
+  for(int pos=0;pos<=360;pos=pos+1){
+  myServo.write(pos);
+  Serial.println(pos);
+}
+}
+else if(distance>300){
+  for(int pos=360;pos>=0;pos=pos-1){
+  myServo.write(pos);
+  Serial.println(pos);
+}
+ 
+}
+} 
