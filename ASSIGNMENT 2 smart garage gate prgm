@@ -1,3 +1,8 @@
+//K Hemanth Reddy
+//19r11a05b2
+//cse c
+Assignment 2
+
 Smart garage gate 
 
 Here we are using an ultra sonic sensor in front of the garage gate .to identify the object distance.
@@ -19,7 +24,7 @@ Servo myServo;
 int echopin=4;
 int trigpin=5;
 void setup() {
- 
+
 pinMode(echopin,INPUT);
 pinMode(trigpin,OUTPUT);
 Serial.begin(9600);
@@ -27,24 +32,25 @@ myServo.attach(13);
 }
 
 void loop() {
-  
+
 digitalWrite(trigpin,HIGH);
+delay(1000);
 digitalWrite(trigpin,LOW);
 int duration=pulseIn(echopin,HIGH);
 int distance=duration*0.0343/2;
 Serial.print("the distance is");
 Serial.println(distance);
 if(distance<=300){
-  for(int pos=0;pos<=360;pos=pos+1){
+  for(int pos=0;pos<=180;pos=pos+1){
   myServo.write(pos);
   Serial.println(pos);
 }
 }
 else if(distance>300){
-  for(int pos=360;pos>=0;pos=pos-1){
+  for(int pos=180;pos>=0;pos=pos-1){
   myServo.write(pos);
   Serial.println(pos);
 }
- 
+
 }
 } 
