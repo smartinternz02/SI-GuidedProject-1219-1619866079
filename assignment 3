@@ -1,4 +1,7 @@
-  
+ //K Hemanth Reddy
+ //19r11a05b2
+ //cse c
+ assignment 3
 
 #include "DHT.h"
 #define DHTPIN 4      
