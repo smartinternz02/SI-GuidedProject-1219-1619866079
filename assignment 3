@@ -1,4 +1,4 @@
-automation of lights and fans in the room depending on the external light intensity and temperature. 
+  
 
 #include "DHT.h"
 #define DHTPIN 4      
@@ -67,40 +67,53 @@ void loop() {
   // Display static text
   
     display.print(F("Humidity: "));
+    display.display();
   display.print(h);
+  display.display();
     display.print(F("%  Temperature: "));
+    display.display();
   display.print(t);
+  display.display();
   display.print(F("°C "));
+  display.display();
   display.print(f);
+  display.display();
   display.print(F("°F  Heat index: "));
+  display.display();
   display.print(hic);
+  display.display();
  display.print(F("°C "));
 display.print(hif);
+display.display();
   display.println(F("°F"));
+  display.display();
   display.println("the ldr value is");
+  display.display();
  display.println(a);
+ display.display();
  //the leds are working automatically depending up on the intensity of ldr.
   //the values of the ldr is 0 to 4000 
   //working inversly if value of ldr is less the light intensity is more.
   if(a<=2000){
 digitalWrite(2,HIGH);
     display.println("led is on");
+    display.display();
 }
 else{
    digitalWrite(2,LOW);
    display.println("led is Off");
+   display.display();
 } 
 //controling the fan by the given temperature if the temperature exeeds 30degree .
 if(f>30){
   digitalWrite(13,HIGH);
   display.println("fan is on");
+  display.display();
   
 }
 else{
   digitalWrite(13,LOW);
   display.println("fan is Off");
+  display.display();
 }
 }
-
-
-
