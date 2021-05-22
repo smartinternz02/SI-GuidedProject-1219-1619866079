@@ -1,0 +1,91 @@
+//Develop a Smart Home Automation project using ESP32.
+
+//The tasks involved in completing this project are:
+//Get the Temperature, Humidity from the DHT11 sensor
+//Get the light intensity from LDR
+//Display the light intensity, Temperature, Humidity values on the OLED display.
+//control the lights based on Light intensity ( Control led's as an indication of light)
+//Control the fans based on the temperature and humidity parameters ( Control led's as an indication of fan)
+
+//Hemanth reddy.
+//19R11A05B2
+//CSE C
+
+#include "DHT.h"
+#define DHTPIN 2     
+#define DHTTYPE DHT11    
+DHT dht(DHTPIN, DHTTYPE);
+#include<Wire.h>
+#include<Adafruit_GFX.h>
+#include<Adafruit_SSD1306.h>
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+Adafruit_SSD1306 display(SCREEN_WIDTH,SCREEN_HEIGHT,&Wire,-1);
+void setup() {
+ 
+  dht.begin();
+ 
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)){
+    Serial.println("SSD1306 FAILED");
+  
+    
+  }
+  delay(2000);
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0,10);
+  
+  display.println("values of dht");
+  display.display();
+  
+}
+
+void loop() {
+int a = analogRead(15);
+Serial.print("ldr value is:");
+Serial.println(a);
+delay(2000); 
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+  if (isnan(h) || isnan(t)){
+    Serial.println(F("Failed to read from DHT sensor!"));
+    return;
+  }
+ 
+  display.print("Humidity:");
+  display.display();
+    display.println(h);
+  display.display();
+    display.print("Temperature: ");
+  display.display();
+    display.println(t);
+  display.display();
+ display.print("ldr value is");
+ display.display();
+ display.println(a);
+display.display();
+  // controling the lights based on the ldr value the ldr value 2000and above will go in to the dark side up to 4000
+  //if the value of the ldr is greater 2000 we are making the led to ON.
+  if(a>2000){
+  digitalWrite(16,HIGH);
+  Serial.println("led is on");
+   }
+else{
+  digitalWrite(16,LOW);
+  Serial.println("led is off"); 
+}
+
+//depending on the temperature and humidity of the air we control the fans(led is optianlly connected)
+//if the tempereature greater than 35 and humidity greater than 45 the fan is on.
+if((t>35)||(h>45)){
+  digitalWrite(17,HIGH);
+  display.println("fan is on");
+  display.display();
+}
+else{
+  digitalWrite(17,LOW);
+  display.println("fan is off");
+  display.display();
+}
+}
